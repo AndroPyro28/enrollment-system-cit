@@ -83,7 +83,7 @@ model User {
   accounts Account[]
   sessions Session[]
 
-  profile Profile[]
+  profile Profile?
 
   role Role
 
@@ -94,16 +94,16 @@ model User {
 model Profile {
   id String @id @default(cuid())
 
-  school_year           String // e.g. 2021-2022
-  grade_level_to_enroll Int
-  is_with_lrn           Boolean
-  is_returnee           Boolean // balik aral
+  school_year           String? // e.g. 2021-2022
+  grade_level_to_enroll Int?
+  is_with_lrn           Boolean?
+  is_returnee           Boolean? // balik aral
 
   // 
   // LEARNER INFORMATION
   // 
   psa_birth_cert_no String?
-  lrn_no            String // learner reference number
+  lrn_no            String? // learner reference number
 
   first_name  String
   last_name   String
@@ -113,19 +113,19 @@ model Profile {
   gender      Gender
   age         Int
 
-  place_of_birth String // municipality/city
-  mother_tongue  String
+  place_of_birth String? // municipality/city
+  mother_tongue  String?
 
-  is_pc    Boolean // belonging to any IP community/Indigenous cultural community 
+  is_pc    Boolean? // belonging to any IP community/Indigenous cultural community 
   ipc_name String? // name of IP community
 
-  is_4ps           Boolean
+  is_4ps           Boolean?
   household_id_4ps String? // 4ps household id number
 
-  is_pwd     Boolean // person with disability
+  is_pwd     Boolean? // person with disability
   disability Disability[]
 
-  is_same_address Boolean
+  is_same_address Boolean?
   address         Address[]
 
   guardian Guardian[]
@@ -167,7 +167,7 @@ model Profile {
   qr_code_id  String?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  userId String @unique
 
   @@index([userId])
 }
