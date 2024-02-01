@@ -31,6 +31,7 @@ export const UserSchema = z.object({
   image: z.string().nullable(),
   hashedPassword: z.string().nullable(),
   role: z.nativeEnum(Role),
+  is_principal: z.boolean().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
 }) satisfies z.ZodType<User>;

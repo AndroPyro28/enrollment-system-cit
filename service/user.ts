@@ -1,12 +1,13 @@
 import { getServerSession } from "next-auth/next";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/auth";
+import { userAllowedFields } from "@/schema/base";
 
 export async function getSession() {
   return await getServerSession(authOptions);
 }
 
-export type TGetCurrentUser = Awaited<ReturnType<typeof getCurrentUser>>;
+export type GetCurrentUserT = Awaited<ReturnType<typeof getCurrentUser>>;
 
 export async function getCurrentUser() {
   try {
@@ -20,8 +21,9 @@ export async function getCurrentUser() {
       where: {
         email: session.user.email,
       },
-      include: {
-        profile: true,
+      select: {
+        ...userAllowedFields,
+        // profile: true,
       },
     });
 
@@ -29,11 +31,7 @@ export async function getCurrentUser() {
       return null;
     }
 
-    const { hashedPassword, ...props } = currentUser;
-
-    return {
-      ...props,
-    };
+    return currentUser;
   } catch (error: any) {
     return null;
   }

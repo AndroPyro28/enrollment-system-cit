@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { Session } from "next-auth";
 import { authOptions } from "./auth";
 import { User, Role } from "@prisma/client";
+import { env } from "@/env.mjs";
 
 export const getSession = async () => {
   return await getServerSession(authOptions);
@@ -43,7 +44,7 @@ export const withAuth =
     session = await getSession();
     console.log("🚀 ~ file: index.ts:55 ~ session:", session);
 
-    if (process.env.NODE_ENV === "development") {
+    if (env.NODE_ENV === "test") {
       return handler({
         req,
         params: params || {},

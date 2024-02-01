@@ -7,11 +7,10 @@ import { Sidebar } from "./Sidebar";
 import { useState } from "react";
 import { useSidebarModeStore } from "@/hooks/useSidebarModeStore";
 import { cn } from "@/lib/utils";
-import { SafeUserT } from "@/schema/base";
-import { TGetCurrentUser } from "@/service/user";
+import { GetCurrentUserT } from "@/service/user";
 
 type MobileSidebarProps = {
-  currentUser?: TGetCurrentUser | null;
+  currentUser?: GetCurrentUserT | null;
 };
 
 export const MobileSidebar = ({ currentUser }: MobileSidebarProps) => {

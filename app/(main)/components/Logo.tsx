@@ -1,6 +1,5 @@
 "use client";
 
-import { useSidebarModeStore } from "@/hooks/useSidebarModeStore";
 import Image from "next/image";
 
 export const Logo = () => {

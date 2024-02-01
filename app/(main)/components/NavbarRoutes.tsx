@@ -1,11 +1,11 @@
 "use client";
 
-import { TGetCurrentUser } from "@/service/user";
+import { GetCurrentUserT } from "@/service/user";
 import UserMenu from "@/components/UserMenu";
 // import UserNotification from "@/components/UserNotification";
 
 type NavbarRoutesProps = {
-  currentUser?: TGetCurrentUser;
+  currentUser?: GetCurrentUserT;
 };
 
 export const NavbarRoutes = ({ currentUser }: NavbarRoutesProps) => {

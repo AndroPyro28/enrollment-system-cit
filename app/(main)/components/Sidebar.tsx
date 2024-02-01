@@ -1,10 +1,10 @@
 "use client";
-import { TGetCurrentUser } from "@/service/user";
+import { GetCurrentUserT } from "@/service/user";
 import { Logo } from "./Logo";
 import { SidebarRoutes } from "./SidebarRoutes";
 
 type SidebarProps = {
-  currentUser?: TGetCurrentUser | null;
+  currentUser?: GetCurrentUserT | null;
   setOpen?: (open: boolean) => void;
 };
 
