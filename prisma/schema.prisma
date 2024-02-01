@@ -78,6 +78,8 @@ model User {
   emailVerified DateTime?
   image         String?
 
+  is_principal Boolean? @default(false)
+
   hashedPassword String?
 
   accounts Account[]

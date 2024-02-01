@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Gender } from "@prisma/client";
 import { ProfileSchema, UserSchema } from "./base";
 
-const TeacherSchema = UserSchema.pick({
+const StudentSchema = UserSchema.pick({
   id: true,
   name: true,
   email: true,
@@ -34,7 +34,7 @@ export const ACCEPTED_EXCEL_EXTENSION = [
 ];
 
 // this schema validate the excel file extension and size
-export const FormUploadExcelTeachersSchema = z.object({
+export const FormUploadExcelStudentsSchema = z.object({
   file: z
     .instanceof(File, {
       message: "File is required",
@@ -49,7 +49,7 @@ export const FormUploadExcelTeachersSchema = z.object({
       const fileName = file.name;
       const fileExtension = "." + fileName.split(".").pop();
       console.log(
-        "🚀 ~ file: teacher.ts:50 ~ .refine ~ fileExtension:",
+        "🚀 ~ file: student.ts:50 ~ .refine ~ fileExtension:",
         fileExtension
       );
 
@@ -57,17 +57,8 @@ export const FormUploadExcelTeachersSchema = z.object({
     }, "Only these files are allowed " + ACCEPTED_EXCEL_EXTENSION.join(", ")),
 });
 
-// upload excel teachers
-// export const UploadExcelTeachersSchema = z.object({
-//   name: z
-//     .string()
-//     .refine((value) => value.endsWith(".xlsx") || value.endsWith(".xls"), {
-//       message: "Uploaded file must be an Excel spreadsheet (.xlsx or .xls)",
-//     }),
-// });
-
 // this shema check the content of the excel file
-export const ValidateTeachersSchema = z
+export const ValidateStudentsSchema = z
   .array(
     z.object({
       first_name: z.string({
@@ -83,7 +74,7 @@ export const ValidateTeachersSchema = z
       dob: z.coerce
         .date({
           errorMap: (error) => {
-            console.log("🚀 ~ file: teacher.ts:47 ~ error:", error);
+            console.log("🚀 ~ file: student.ts:47 ~ error:", error);
             if (error.code === "invalid_date") {
               return {
                 message:
@@ -105,13 +96,13 @@ export const ValidateTeachersSchema = z
       // add more fields here
     })
   )
-  .max(100, "Maximum of 100 teachers only");
+  .max(100, "Maximum of 100 students only");
 
 // form types
-export type FormUploadExcelTeachersSchemaT = z.infer<
-  typeof FormUploadExcelTeachersSchema
+export type FormUploadExcelStudentsSchemaT = z.infer<
+  typeof FormUploadExcelStudentsSchema
 >;
 
 // type use inside api
-export type TeacherT = z.infer<typeof TeacherSchema>;
-export type CreateTeachersT = z.infer<typeof ValidateTeachersSchema>;
+export type StudentT = z.infer<typeof StudentSchema>;
+export type CreateStudentsT = z.infer<typeof ValidateStudentsSchema>;

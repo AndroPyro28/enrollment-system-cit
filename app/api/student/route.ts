@@ -2,24 +2,24 @@ import { extractDataFromExcel } from "@/lib/excel";
 import { userAllowedFields } from "@/schema/base";
 import prisma from "@/lib/prisma";
 import { withAuth } from "@/lib/withAuth";
-import {
-  ValidateTeachersSchema,
-  TeacherT,
-  FormUploadExcelTeachersSchema,
-} from "@/schema/teacher";
 import { NextResponse } from "next/server";
 import {
   generateHashPassword,
   generatePassword,
 } from "@/lib/generate-password";
 import { generateEmail } from "@/lib/generate-email";
+import {
+  FormUploadExcelStudentsSchema,
+  StudentT,
+  ValidateStudentsSchema,
+} from "@/schema/students";
 import { calculateAge } from "@/lib/calculateAge";
 
 /* 
-  GET TEACHERS
+  GET STUDENTS
 
   METHOD: GET
-  ROUTE: /api/teachers 
+  ROUTE: /api/students 
 */
 export const GET = withAuth(
   async ({ req, session, params }) => {
@@ -40,9 +40,9 @@ export const GET = withAuth(
     // }
 
     try {
-      const teachers: TeacherT[] = await prisma.user.findMany({
+      const students: StudentT[] = await prisma.user.findMany({
         where: {
-          role: "teacher",
+          role: "student",
         },
         select: {
           ...userAllowedFields,
@@ -50,23 +50,23 @@ export const GET = withAuth(
         },
       });
 
-      return NextResponse.json(teachers, { status: 200 });
+      return NextResponse.json(students, { status: 200 });
     } catch (error) {
-      console.log("[TEACHER_GET]", error);
+      console.log("[STUDENT_GET]", error);
       return new NextResponse("Internal error", { status: 500 });
     }
   },
   {
-    requiredRole: ["admin", "teacher"],
+    requiredRole: ["admin"],
   }
 );
 
 /* 
-  UPLOAD TEACHERS EXCEL FORMAT
- First Name* |	Last Name* | Middle Name* | Extension | Date of Birth* | Gender*
+  UPLOAD STUDENTS EXCEL FORMAT
+  First Name* |	Last Name* | Middle Name* | Extension | Date of Birth* | Gender*
 
   METHOD: POST
-  ROUTE: /api/teachers 
+  ROUTE: /api/students 
 */
 export const POST = withAuth(
   async ({ req, session }) => {
@@ -76,7 +76,7 @@ export const POST = withAuth(
     const file = body.file;
 
     // validate file
-    const validatedFile = FormUploadExcelTeachersSchema.safeParse({
+    const validatedFile = FormUploadExcelStudentsSchema.safeParse({
       file: file,
     });
 
@@ -92,20 +92,20 @@ export const POST = withAuth(
     const data = await extractDataFromExcel(file);
     console.log("🚀 ~ file: route.ts:93 ~ data:", data);
 
-    const formattedData = data?.map((teacher: any) => {
+    const formattedData = data?.map((student: any) => {
       return {
-        first_name: teacher["First Name"],
-        last_name: teacher["Last Name"],
-        middle_name: teacher["Middle Name"],
-        extension: teacher["Extension"],
-        dob: teacher["Date of Birth"],
-        age: teacher["Age"],
-        gender: teacher["Gender"],
+        first_name: student["First Name"],
+        last_name: student["Last Name"],
+        middle_name: student["Middle Name"],
+        extension: student["Extension"],
+        dob: student["Date of Birth"],
+        age: student["Age"],
+        gender: student["Gender"],
       };
     });
 
     // validate data
-    const validatedExcel = ValidateTeachersSchema.safeParse(formattedData);
+    const validatedExcel = ValidateStudentsSchema.safeParse(formattedData);
 
     if (!validatedExcel.success) {
       return NextResponse.json(
@@ -116,50 +116,50 @@ export const POST = withAuth(
       );
     }
 
-    const teachers = validatedExcel.data;
-    console.log("🚀 ~ file: route.ts:119 ~ teachers:", teachers);
+    const students = validatedExcel.data;
+    console.log("🚀 ~ file: route.ts:119 ~ students:", students);
 
     try {
-      // create all teachers
+      // create all students
       await Promise.all(
-        teachers.map(async (teacher) => {
-          const password = generatePassword(teacher.first_name, teacher.dob);
+        students.map(async (student) => {
+          const password = generatePassword(student.first_name, student.dob);
           const hashedPassword = await generateHashPassword(password);
           const email = generateEmail(
-            "teacher",
-            teacher.first_name,
-            teacher.last_name,
-            teacher.dob
+            "student",
+            student.first_name,
+            student.last_name,
+            student.dob
           );
 
-          const createdTeacher = await prisma.profile.create({
+          const createdStudent = await prisma.profile.create({
             data: {
-              first_name: teacher.first_name,
-              last_name: teacher.last_name,
-              middle_name: teacher.middle_name,
-              extension: teacher.extension,
-              dob: teacher.dob,
-              gender: teacher.gender,
-              age: calculateAge(teacher.dob),
+              first_name: student.first_name,
+              last_name: student.last_name,
+              middle_name: student.middle_name,
+              extension: student.extension,
+              dob: student.dob,
+              gender: student.gender,
+              age: calculateAge(student.dob),
               user: {
                 create: {
                   email: email,
                   hashedPassword: hashedPassword,
-                  role: "teacher",
+                  role: "student",
                 },
               },
             },
           });
 
-          return createdTeacher;
+          return createdStudent;
         })
       );
 
-      return NextResponse.json("All teachers successfully created", {
+      return NextResponse.json("All students successfully created", {
         status: 201,
       });
     } catch (error) {
-      console.log("[TEACHER-POST]", error);
+      console.log("[STUDENT-POST]", error);
       return new NextResponse("Internal error", { status: 500 });
     }
   },
