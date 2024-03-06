@@ -35,6 +35,12 @@ const routesList: routeListType[] = [
     href: "/registration",
     roles: ["ALL"],
   },
+  {
+    icon: TableProperties,
+    label: "Enrollment",
+    href: "/enrollment",
+    roles: ["ALL"],
+  },
   // {
   //   icon: TableProperties,
   //   label: "Section",
