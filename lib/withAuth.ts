@@ -44,25 +44,6 @@ export const withAuth =
     session = await getSession();
     console.log("🚀 ~ file: index.ts:55 ~ session:", session);
 
-    if (env.NODE_ENV === "test") {
-      return handler({
-        req,
-        params: params || {},
-        searchParams,
-        headers,
-        session: {
-          user: {
-            id: "1",
-            name: "John Doe",
-            email: "John@gmail.com",
-            image: "",
-            role: "admin",
-          },
-          expires: "2021-08-20T12:00:00.000Z",
-        },
-      });
-    }
-
     if (!session) {
       return new Response("Unauthorized: Login required.", {
         status: 401,
