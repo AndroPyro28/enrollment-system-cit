@@ -9,6 +9,7 @@ import {
   Address,
   AddressType,
   Guardian,
+  RegistrationForm,
 } from "@prisma/client";
 import { z } from "zod";
 
@@ -119,6 +120,51 @@ export const GuardianSchema = z.object({
   studentId: z.string().nullable(),
 }) satisfies z.ZodType<Guardian>;
 
+// Registration Schema
+export const RegistrationFormSchema = z.object({
+  id: z.string(),
+  school_year: z.string().nullable(),
+  grade_level_to_enroll: z.number().nullable(),
+  is_with_lrn: z.boolean().nullable(),
+  is_returnee: z.boolean().nullable(),
+  psa_birth_cert_no: z.string().nullable(),
+  lrn_no: z.string().nullable(),
+  first_name: z.string(),
+  last_name: z.string(),
+  middle_name: z.string(),
+  extension: z.string().nullable(),
+  dob: z.date(),
+  gender: z.nativeEnum(Gender),
+  age: z.number(),
+  place_of_birth: z.string().nullable(),
+  mother_tongue: z.string().nullable(),
+  is_pc: z.boolean().nullable(),
+  ipc_name: z.string().nullable(),
+  is_4ps: z.boolean().nullable(),
+  household_id_4ps: z.string().nullable(),
+  is_pwd: z.boolean().nullable(),
+  is_same_address: z.boolean().nullable(),
+  last_grade_level_complete: z.string().nullable(),
+  last_school_year_complete: z.string().nullable(),
+  last_school_attended: z.string().nullable(),
+  school_id: z.string().nullable(),
+  semester: z.nativeEnum(Semester).nullable(),
+  track: z.string().nullable(),
+  strand: z.string().nullable(),
+  form137_url: z.string().nullable(),
+  form137_id: z.string().nullable(),
+  birth_cert_url: z.string().nullable(),
+  birth_cert_id: z.string().nullable(),
+  card_url: z.string().nullable(),
+  card_id: z.string().nullable(),
+  application_form_url: z.string().nullable(),
+  application_form_id: z.string().nullable(),
+  picture_url: z.string().nullable(),
+  picture_id: z.string().nullable(),
+  qr_code_url: z.string().nullable(),
+  qr_code_id: z.string().nullable(),
+}) satisfies z.ZodType<RegistrationForm>;
+
 // types
 export type UserT = z.infer<typeof UserSchema>;
 
@@ -129,3 +175,4 @@ export type DisabilityT = z.infer<typeof DisabilitySchema>;
 export type LearningModalityT = z.infer<typeof LearningModalitySchema>;
 export type AddressT = z.infer<typeof AddressSchema>;
 export type GuardianT = z.infer<typeof GuardianSchema>;
+export type RegistrationFormT = z.infer<typeof RegistrationFormSchema>;

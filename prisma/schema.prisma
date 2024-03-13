@@ -124,13 +124,13 @@ model Profile {
   is_4ps           Boolean?
   household_id_4ps String? // 4ps household id number
 
-  is_pwd     Boolean? // person with disability
-  disability Disability[]
+  is_pwd       Boolean? // person with disability
+  disabilities Disability[]
 
   is_same_address Boolean?
   address         Address[]
 
-  guardian Guardian[]
+  guardians Guardian[]
 
   // FOR RETURNING STUDENTS / TRANSFEREES 
   last_grade_level_complete String?
@@ -144,7 +144,7 @@ model Profile {
   strand   String?
 
   //  STUDENT PREFFERED LEARNING MODALITY
-  preferred_learning_modality LearningModality[]
+  preferred_learning_modalities LearningModality[]
 
   // DOCUMENTS
   form137_url String?
@@ -179,6 +179,8 @@ model Disability {
 
   name    String
   student Profile[]
+
+  registrationForm RegistrationForm[]
 }
 
 model LearningModality {
@@ -186,6 +188,8 @@ model LearningModality {
 
   name    String
   student Profile[]
+
+  registrationForm RegistrationForm[]
 }
 
 model Address {
@@ -202,6 +206,8 @@ model Address {
   type AddressType @default(current)
 
   student Profile[]
+
+  registrationForm RegistrationForm[]
 }
 
 model Guardian {
@@ -212,8 +218,83 @@ model Guardian {
   middle_name String
   contact_no  String
 
-  student   Profile? @relation(fields: [studentId], references: [id])
-  studentId String? // Profile id
+  students Profile[]
 
-  @@index([studentId])
+  registrationForm RegistrationForm[]
+}
+
+model RegistrationForm {
+  id String @id @default(cuid())
+
+  school_year           String? // e.g. 2021-2022
+  grade_level_to_enroll Int?
+  is_with_lrn           Boolean?
+  is_returnee           Boolean? // balik aral
+
+  // 
+  // LEARNER INFORMATION
+  // 
+  psa_birth_cert_no String?
+  lrn_no            String? // learner reference number
+
+  first_name  String
+  last_name   String
+  middle_name String
+  extension   String?
+  dob         DateTime // date of birth
+  gender      Gender
+  age         Int
+
+  place_of_birth String? // municipality/city
+  mother_tongue  String?
+
+  is_pc    Boolean? // belonging to any IP community/Indigenous cultural community 
+  ipc_name String? // name of IP community
+
+  is_4ps           Boolean?
+  household_id_4ps String? // 4ps household id number
+
+  is_pwd       Boolean? // person with disability
+  disabilities Disability[]
+
+  is_same_address Boolean?
+  address         Address[]
+
+  guardians Guardian[]
+
+  // FOR RETURNING STUDENTS / TRANSFEREES 
+  last_grade_level_complete String?
+  last_school_year_complete String?
+  last_school_attended      String?
+  school_id                 String?
+
+  // FOR LEARNER IN SENIOR HIGH SCHOOL
+  semester Semester?
+  track    String?
+  strand   String?
+
+  //  STUDENT PREFFERED LEARNING MODALITY
+  preferred_learning_modalities LearningModality[]
+
+  // DOCUMENTS
+  form137_url String?
+  form137_id  String?
+
+  birth_cert_url String?
+  birth_cert_id  String?
+
+  card_url String?
+  card_id  String?
+
+  application_form_url String?
+  application_form_id  String?
+
+  // 1x1 picture
+  picture_url String?
+  picture_id  String?
+
+  // QR CODE
+  // qr code contains the student's information (name , school year , year level , section )
+  qr_code_url String?
+  qr_code_id  String?
 }
