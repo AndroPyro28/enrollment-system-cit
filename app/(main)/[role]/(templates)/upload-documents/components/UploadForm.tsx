@@ -9,7 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { TUploadSchema, UploadSchema } from "@/schema/upload";
-import UploadItem from "./upload-item";
+import UploadItem from "./UploadItem";
 
 const Upload = () => {
   const form = useForm<TUploadSchema>({
