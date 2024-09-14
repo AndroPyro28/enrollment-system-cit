@@ -13,9 +13,9 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="h-full">
-      <NavbarWrapper>
+      {/* <NavbarWrapper>
         <Navbar currentUser={currentUser} />
-      </NavbarWrapper>
+      </NavbarWrapper> */}
 
       <SidebarWrapper>
         <Sidebar currentUser={currentUser} />
