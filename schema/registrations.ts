@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { RegistrationFormSchema } from "./base";
+import { LearningModalitySchema, RegistrationFormSchema } from "./base";
 
 export const CreateRegistrationFormSchema = RegistrationFormSchema.extend({
   id: z.string().optional(),
@@ -27,7 +27,8 @@ export const CreateRegistrationFormSchema = RegistrationFormSchema.extend({
     last_name: z.string(),
     middle_name: z.string(),
     contact_no: z.string(),
-  })
+  }),
+  preferred_learning_modalities: z.array(z.string())
 });
 
 // form types

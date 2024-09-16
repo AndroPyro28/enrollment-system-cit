@@ -150,7 +150,7 @@ export const RegistrationFormSchema = z.object({
   last_school_year_complete: z.string().nullable(),
   last_school_attended: z.string().nullable(),
   school_id: z.string().nullable(),
-  semester: z.nativeEnum(Semester).nullable(),
+  semester: z.enum(['first', 'second']),
   track: z.string().nullable(),
   strand: z.string().nullable(),
   form137_url: z.string().nullable(),
