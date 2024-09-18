@@ -29,7 +29,11 @@ export const CreateRegistrationFormSchema = RegistrationFormSchema.extend({
     contact_no: z.string(),
   }),
   preferred_learning_modalities: z.array(z.string())
-});
+})
+.extend({
+  is_with_lrn: z.enum(['true', 'false']),
+  is_returnee: z.enum(['true', 'false'])
+})
 
 // form types
 export type CreateRegistrationFormT = z.infer<typeof CreateRegistrationFormSchema>;
