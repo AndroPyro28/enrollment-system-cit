@@ -4,6 +4,7 @@ import {
   Briefcase,
   CalendarDays,
   Home,
+  Menu,
   MessageCircle,
   TableProperties,
   Users,
@@ -13,88 +14,71 @@ import { SidebarItem } from "./SidebarItem";
 import { isUserAllowed } from "@/lib/utils";
 import { Role } from "@prisma/client";
 import { useSidebarModeStore } from "@/hooks/useSidebarModeStore";
+import { useState } from "react";
 
-type routeListType = {
+// type routeListType = {
+//   roles: ("ALL" | Role)[]
+// } & routeType
+
+type routeType = {
   icon: any;
   label: string;
   href: string;
-  roles: ("ALL" | Role)[];
-};
+}
+
+export type routeListType = 
+  | { id: number; type: 'nested'; roles: ("ALL" | Role)[]; icon: any; label: string; hrefs:routeType[]}
+  | { id: number; type: 'simple'; roles: ("ALL" | Role)[] } & routeType
 
 const routesList: routeListType[] = [
   {
+    id: 1,
     icon: Home,
+    type:"simple",
     label: "Home",
     href: "/dashboard",
     roles: ["ALL"],
   },
-
   {
+    id: 2,
     icon: TableProperties,
+    type:"simple",
     label: "Registration",
     href: "/registration",
     roles: ["ALL"],
   },
   {
-    icon: TableProperties,
-    label: "Enrollment",
-    href: "/enrollment",
+    id: 3,
+    icon: Menu,
+    label: "Settings",
+    type: "nested",
+    hrefs: [
+      {
+        href: '/andro',
+        icon: Users,
+        label: 'Add Teacher'
+      },
+      {
+        href: '',
+        icon: Users,
+        label: 'Add Subject Teacher'
+      },
+      {
+        href: '',
+        icon: Users,
+        label: 'Add Student'
+      },{
+        href: '',
+        icon: Users,
+        label: 'Add School year'
+      },{
+        href: '',
+        icon: Users,
+        label: 'Add Section'
+      }
+    ],
     roles: ["ALL"],
   },
-  // {
-  //   icon: TableProperties,
-  //   label: "Section",
-  //   href: "/sections",
-  //   roles: ["ADMIN"],
-  // },
-  // {
-  //   icon: Users,
-  //   label: "Alumni / Students",
-  //   href: "/students",
-  //   roles: ["ADMIN"],
-  // },
-  // {
-  //   icon: Users,
-  //   label: "Users",
-  //   href: "/users",
-  //   roles: ["ADMIN"],
-  // },
-  // {
-  //   icon: MdHive,
-  //   label: "CIT-zen",
-  //   href: "/forums",
-  //   roles: ["ADMIN", "ADVISER", "STUDENT", "ALUMNI"],
-  // },
-  // {
-  //   icon: Briefcase,
-  //   label: "Jobs",
-  //   href: "/jobs",
-  //   roles: ["ALL"],
-  // },
-  // {
-  //   icon: CalendarDays,
-  //   label: "Events",
-  //   href: "/events",
-  //   roles: ["ADMIN", "ADVISER", "STUDENT", "ALUMNI"],
-  // },
-  // {
-  //   icon: MessageCircle,
-  //   label: "Message",
-  //   href: "/messages",
-  //   roles: ["ADMIN", "ADVISER", "STUDENT", "ALUMNI"],
-  // },
-  // {
-  //   icon: Bell,
-  //   label: "Notifications",
-  //   href: "/notifications",
-  //   roles: ["ALL"],
-  // },
-  // {
-  //   icon: Megaphone,
-  //   label: "Anoucement",
-  //   href: "/anoucement",
-  //   roles: ["ALL"],
-  // },
 ];
 
 type SidebarRoutesProps = {
@@ -104,10 +88,11 @@ type SidebarRoutesProps = {
 
 export const SidebarRoutes = ({ role, setOpen }: SidebarRoutesProps) => {
   const { mode } = useSidebarModeStore();
+  const [routeId, setRouteId] = useState<null | number>()
 
   return (
     <div className="flex flex-col w-full ">
-      {routesList.map((route) => {
+      {routesList.map((route, index) => {
         if (!isUserAllowed(role, route.roles)) {
           return null;
         }
@@ -115,11 +100,14 @@ export const SidebarRoutes = ({ role, setOpen }: SidebarRoutesProps) => {
         return (
           <SidebarItem
             mode={mode}
-            key={route.href}
-            icon={route.icon}
-            label={route.label}
+            key={index}
+            // icon={route.icon}
+            // label={route.label}
             setOpen={setOpen}
-            href={`/${role}${route.href}`}
+            setRouteId={setRouteId}
+            routeId={routeId}
+            // href={`/${role}${route.href}`}
+            route={route}
           />
         );
       })}
