@@ -31,6 +31,9 @@ const RegistrationForm = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-y-5 px-10 py-10 border-zinc-800 border  rounded-xl"
         >
+
+          <div className="flex flex-col gap-y-5 px-10 py-10 border-zinc-800 border  rounded-xl">
+
           <div className="flex flex-col space-y-5">
             <div className="py-5 px-3 border-zinc-800 border rounded-md flex space-x-10">
               <h2>Current Address</h2>
@@ -465,6 +468,7 @@ const RegistrationForm = () => {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </form>
       </Form>

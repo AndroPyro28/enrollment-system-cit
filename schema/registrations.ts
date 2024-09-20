@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { LearningModalitySchema, RegistrationFormSchema } from "./base";
+import { GuardianSchema, LearningModalitySchema, RegistrationFormSchema } from "./base";
+import { UploadSchema } from "./upload";
 
 export const CreateRegistrationFormSchema = RegistrationFormSchema.extend({
   id: z.string().optional(),
@@ -10,29 +11,33 @@ export const CreateRegistrationFormSchema = RegistrationFormSchema.extend({
   province: z.string(),
   country: z.string(),
   zip_code: z.string(),
-  father_contact_info: z.object({
-    first_name: z.string(),
-    last_name: z.string(),
-    middle_name: z.string(),
-    contact_no: z.string(),
+  father_contact_info: GuardianSchema.pick({
+    contact_no:true,
+    last_name:true,
+    middle_name:true,
+    first_name:true,
   }),
-  mother_contact_info: z.object({
-    first_name: z.string(),
-    last_name: z.string(),
-    middle_name: z.string(),
-    contact_no: z.string(),
+  mother_contact_info: GuardianSchema.pick({
+    contact_no:true,
+    last_name:true,
+    middle_name:true,
+    first_name:true,
   }),
-  guardian_contact_info: z.object({
-    first_name: z.string(),
-    last_name: z.string(),
-    middle_name: z.string(),
-    contact_no: z.string(),
+  guardian_contact_info: GuardianSchema.pick({
+    contact_no:true,
+    last_name:true,
+    middle_name:true,
+    first_name:true,
   }),
-  preferred_learning_modalities: z.array(z.string())
+  preferred_learning_modalities: z.array(z.string()),
+  uploads: UploadSchema
 })
 .extend({
   is_with_lrn: z.enum(['true', 'false']),
-  is_returnee: z.enum(['true', 'false'])
+  is_returnee: z.enum(['true', 'false']),
+  is_4ps: z.enum(['true', 'false']),
+  is_pc: z.enum(['true', 'false']),
+
 })
 
 // form types

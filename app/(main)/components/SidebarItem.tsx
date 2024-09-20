@@ -42,12 +42,14 @@ export const SidebarItem = ({
   };
 
   if (isSimpleRoute) {
+    const isActivePathname =  route.href && pathname.includes(route.href);
+
     return (
       <Link
         href={route.href}
         className={cn(
           "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20 dark:bg-[#020817] dark:text-white",
-          isActiveRoute &&
+          isActivePathname &&
             "text-sky-700 bg-sky-200/20 hover:bg-sky-200/20 hover:text-sky-700 "
         )}
         onClick={() => onClick(route.id, route.href)}
@@ -59,7 +61,7 @@ export const SidebarItem = ({
                 size={18}
                 className={cn(
                   "text-slate-500 dark:bg-[#020817] dark:text-white",
-                  isActiveRoute && "text-sky-700"
+                  isActivePathname && "text-sky-700"
                 )}
               />
             </Hint>
@@ -68,7 +70,7 @@ export const SidebarItem = ({
               size={18}
               className={cn(
                 "text-slate-500 dark:bg-[#020817] dark:text-white",
-                isActiveRoute && "text-sky-700"
+                isActivePathname && "text-sky-700"
               )}
             />
           )}
@@ -79,7 +81,7 @@ export const SidebarItem = ({
         <div
           className={cn(
             "ml-auto opacity-0 border-2 border-sky-700 h-full transition-all",
-            isActiveRoute && "opacity-100"
+            isActivePathname && "opacity-100"
           )}
         />
       </Link>

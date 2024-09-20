@@ -18,7 +18,7 @@ export const Sidebar = ({ currentUser, setOpen }: SidebarProps) => {
       
         {currentUser?.role || true && (
           // just for testing
-          <SidebarRoutes role={currentUser?.role} setOpen={setOpen} />
+          <SidebarRoutes role={currentUser?.role || ""} setOpen={setOpen} />
         )}
       </div>
     </div>
