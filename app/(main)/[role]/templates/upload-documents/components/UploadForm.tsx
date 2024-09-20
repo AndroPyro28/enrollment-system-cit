@@ -35,20 +35,7 @@ const Upload = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-y-5 px-10 "
         >
-          <h1 className="font-bold text-3xl">Upload Documents</h1>
-
-          <div className="flex flex-col gap-y-5 px-5 mt-10">
-            {uploads.map((item, index) => {
-              return (
-                <UploadItem
-                  form={form}
-                  name={item.name}
-                  key={index}
-                  label={item.label}
-                />
-              );
-            })}
-          </div>
+          
           <Button className="w-fit self-end">Done</Button>
         </form>
       </Form>

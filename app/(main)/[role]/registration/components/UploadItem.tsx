@@ -21,6 +21,7 @@ const UploadItem:React.FC<UploadItemProps> = ({ label, name, form}) => {
               <FormField
                 control={form.control}
                 name={name}
+                key={name}
                 render={({ field }) => (
                   <FormItem className="">
                     <label

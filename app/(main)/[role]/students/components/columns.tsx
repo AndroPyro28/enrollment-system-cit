@@ -61,7 +61,7 @@ export const columns: ColumnDef<any>[] =
             className=" dark:text-white flex justify-center"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Student No.
+            LRN
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );

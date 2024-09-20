@@ -88,31 +88,31 @@ const StudentsClient = (props: StudentsClientProps) => {
         <h1 className="text-xl font-bold">STUDENTS</h1>
         <div className="flex gap-4">
           <div className="flex justify-end gap-x-5">
-            <Button
+            {/* <Button
               className="text-zinc-500 dark:text-white"
               variant={"outline"}
             //   onClick={() => onOpen("createStudent")}
             >
               {" "}
               <UserPlus className="w-5 h-5 mr-2" /> Add student
-            </Button>
-            <Button
+            </Button> */}
+            {/* <Button
               className="text-zinc-500 dark:text-white"
               variant={"outline"}
             //   onClick={() => onOpen("importStudents")}
             >
               {" "}
               <File className="w-5 h-5 mr-2" /> Import students
-            </Button>
+            </Button> */}
 
-            <Button
+            {/* <Button
               className="text-zinc-500 dark:text-white"
               variant={"outline"}
             //   onClick={() => onOpen("bulkUpdateStudents")}
             >
               {" "}
               <File className="w-5 h-5 mr-2" /> Update students
-            </Button>
+            </Button> */}
           </div>
           {/* clear filters */}
           <Button
@@ -145,7 +145,7 @@ const StudentsClient = (props: StudentsClientProps) => {
           }}
           className="w-full"
         />
-        <Select value={role} onValueChange={(value) => setRole(value)}>
+        {/* <Select value={role} onValueChange={(value) => setRole(value)}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
@@ -154,7 +154,7 @@ const StudentsClient = (props: StudentsClientProps) => {
             <SelectItem value="STUDENT">Student</SelectItem>
             <SelectItem value="ALUMNI">Alumni</SelectItem>
           </SelectContent>
-        </Select>
+        </Select> */}
 
         {/* select school year */}
         
@@ -196,16 +196,38 @@ const StudentsClient = (props: StudentsClientProps) => {
       </div>
       <DataTable
         columns={columns}
-        data={[{
-            id: 'ddccgg',
+        data={[
+          {
+            id: 'd1dccgg',
             email: "Menandroeugenio1028@gmail.com",
             profile: {
-                studentNumber:"1234555",
+                studentNumber:"47912657353554555",
                 firstname:"Menandro",
                 middlename:"Talla",
                 lastname:"Eugenio Jr"
             }
-        }]}
+        },
+          {
+            id: 'd2dcc5gg',
+            email: "johndoe@gmail.com",
+            profile: {
+                studentNumber:"47912657356354555",
+                firstname:"john",
+                middlename:"venedict",
+                lastname:"doe"
+            }
+        },
+        {
+          id: 'd3dcc5gg',
+          email: "carlbeningto@gmail.com",
+          profile: {
+              studentNumber:"47912698753554555",
+              firstname:"carl",
+              middlename:"berria",
+              lastname:"beningto"
+          }
+        }
+      ]}
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
         // searchKeys={["School Year", "Department"]}

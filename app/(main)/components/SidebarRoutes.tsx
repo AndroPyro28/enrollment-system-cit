@@ -44,7 +44,7 @@ const routesList: routeListType[] = [
     icon: TableProperties,
     type:"simple",
     label: "Registration",
-    href: "/registration",
+    href: "/role/registration",
     roles: ["ALL"],
   },
   {
@@ -54,7 +54,7 @@ const routesList: routeListType[] = [
     type: "nested",
     hrefs: [
       {
-        href: '/andro',
+        href: '',
         icon: Users,
         label: 'Add Teacher'
       },

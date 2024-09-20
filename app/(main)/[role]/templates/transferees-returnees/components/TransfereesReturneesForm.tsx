@@ -34,6 +34,7 @@ export const TransfereesReturneesForm = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-y-5 px-10 py-10 border-zinc-800 border  rounded-xl"
         >
+        <div className="flex flex-col gap-y-5">
           <div className="flex flex-col space-y-5">
             <div className="py-5 px-3 border-zinc-800 border rounded-md flex space-x-10 justify-center">
               <h2>For Returnees and Transferees Students</h2>
@@ -275,6 +276,7 @@ export const TransfereesReturneesForm = () => {
                 );
               }}
             />
+          </div>
           </div>
           <Button className="w-fit self-end">Next</Button>
         </form>
